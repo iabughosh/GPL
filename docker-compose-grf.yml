@@ -1,0 +1,52 @@
+version: "3"
+
+networks:
+  loki:
+
+services:
+  loki:
+    image: grafana/loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-local-config.yaml:/etc/loki/loki-config.yml
+    networks:
+      - loki
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - loki
+#  promtail:
+#    image: grafana/promtail:1.4.1
+#    volumes:
+#      - /var/log:/var/log
+#    command: -config.file=/etc/promtail/docker-config.yaml
+#    networks:
+#      - loki
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grf-data:/var/lib/grafana
+    networks:
+      - loki
+  jaeger:
+    image: jaegertracing/all-in-one
+    ports:
+      - 5775:5775/udp
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 5778:5778
+      - 16686:16686
+      - 14268:14268
+      - 9411:9411
+    environment:
+      COLLECTOR_ZIPKIN_HTTP_PORT: "9411"
+    networks:
+      - loki
