@@ -13,6 +13,7 @@
     - name: Recursively find /tmp files older than 4 weeks and equal or greater than 1 megabyte
       find:
         paths: "{{ playbook_dir }}"
+        pattern: '*'
         recurse: yes
     - name: "Stop docker compose"
       docker_compose:
