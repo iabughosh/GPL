@@ -12,7 +12,7 @@
         msg: "Ansible directory with {{ playbook_dir }}"
     - name: Recursively find /tmp files older than 4 weeks and equal or greater than 1 megabyte
       find:
-        paths: "{{ playbook_dir }}"
+        paths: "/tmp"
         pattern: '*'
         recurse: yes
     - name: "Stop docker compose"
