@@ -17,13 +17,13 @@
         recurse: yes
     - name: "Stop docker compose"
       docker_compose:
-        project_src: ".{{ playbook_dir }}"
+        project_src: ../
         docker_host: '{{ docker_host }}'
         files: docker-compose-grf.yml
         state: absent
     - name: "Run docker compose"
       docker_compose:
-        project_src: ".{{ playbook_dir }}" 
+        project_src: ../ 
         docker_host: '{{ docker_host }}'
         files: docker-compose-grf.yml
       register: output
