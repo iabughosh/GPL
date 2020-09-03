@@ -10,15 +10,19 @@
     - name: "Print working directory"
       debug:
         msg: "Ansible directory with {{ playbook_dir }}"
+    - name: Recursively find /tmp files older than 4 weeks and equal or greater than 1 megabyte
+      find:
+        paths: {{ playbook_dir }} 
+        recurse: yes
     - name: "Stop docker compose"
       docker_compose:
-        project_src: "./{{ playbook_dir }}"
+        project_src: ".{{ playbook_dir }}"
         docker_host: '{{ docker_host }}'
         files: docker-compose-grf.yml
         state: absent
     - name: "Run docker compose"
       docker_compose:
-        project_src: "./{{ playbook_dir }}" 
+        project_src: ".{{ playbook_dir }}" 
         docker_host: '{{ docker_host }}'
         files: docker-compose-grf.yml
       register: output
