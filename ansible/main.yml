@@ -1,6 +1,8 @@
 ---
 - name: Converge
   hosts: localhost
+  vars:
+    docker_host: localhost:2375
   tasks:
     - name: "Print working directory"
       debug:
@@ -8,11 +10,13 @@
     - name: "Stop docker compose"
       docker_compose:
         project_src: /home/iabughosh/workspace/GPL
+        docker_host: '{{ docker_host }}'
         files: docker-compose-grf.yml
         state: absent
     - name: "Run docker compose"
       docker_compose:
         project_src: /home/iabughosh/workspace/GPL
+        docker_host: '{{ docker_host }}'
         files: docker-compose-grf.yml
       register: output
     - name: Print message output
@@ -25,4 +29,3 @@
           - "prometheus.gpl_prometheus_1.state.running"
           - "loki.gpl_loki_1.state.running"
           - "jaeger.gpl_jaeger_1.state.running"
-
