@@ -31,12 +31,27 @@ scrape_configs:
 #    - docker.for.mac.localhost:7071
 #    - docker.for.mac.localhost:7072
 #    - docker.for.mac.localhost:7073
-- job_name: 'apps'
+#- job_name: 'apps'
+#  scrape_interval: 5s
+#  metrics_path: '/metrics'
+#  static_configs:
+#  - targets:
+#    - docker.for.mac.localhost:8080
+#  basic_auth:
+#    username: devops
+#    password: uaepass
+
+## Scrape Config - Tower
+- job_name: 'tower'
+  metrics_path: /api/v2/metrics
   scrape_interval: 5s
-  metrics_path: '/metrics'
+  scheme: http
+  bearer_token: GkDXNpPkxs4QsiooB4Sv5gstnn4dpk
   static_configs:
-  - targets:
-    - docker.for.mac.localhost:8080
-  basic_auth:
-    username: devops
-    password: uaepass
+          - targets: ['172.17.0.1:8689']
+
+## Add Node Exporter
+- job_name: 'tower-01'
+  scrape_interval: 5s
+  static_configs:
+    - targets: ['172.17.0.1:9100']

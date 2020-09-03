@@ -1,0 +1,28 @@
+---
+- name: Converge
+  hosts: localhost
+  tasks:
+    - name: "Print working directory"
+      debug:
+        msg: "Ansible directory with {{ playbook_dir }}"
+    - name: "Stop docker compose"
+      docker_compose:
+        project_src: /home/iabughosh/workspace/GPL
+        files: docker-compose-grf.yml
+        state: absent
+    - name: "Run docker compose"
+      docker_compose:
+        project_src: /home/iabughosh/workspace/GPL
+        files: docker-compose-grf.yml
+      register: output
+    - name: Print message output
+      debug:
+        var: output
+    - name: assert that it is running
+      assert:
+        that: 
+          - "grafana.gpl_grafana_1.state.running"
+          - "prometheus.gpl_prometheus_1.state.running"
+          - "loki.gpl_loki_1.state.running"
+          - "jaeger.gpl_jaeger_1.state.running"
+
