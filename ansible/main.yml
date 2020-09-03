@@ -4,18 +4,21 @@
   vars:
     docker_host: localhost:2375
   tasks:
+    - name: Check if docker-compose packages are there
+      pip:
+        name: docker_compose
     - name: "Print working directory"
       debug:
         msg: "Ansible directory with {{ playbook_dir }}"
     - name: "Stop docker compose"
       docker_compose:
-        project_src: /home/iabughosh/workspace/GPL
+        project_src: "./{{ playbook_dir }}"
         docker_host: '{{ docker_host }}'
         files: docker-compose-grf.yml
         state: absent
     - name: "Run docker compose"
       docker_compose:
-        project_src: /home/iabughosh/workspace/GPL
+        project_src: "./{{ playbook_dir }}" 
         docker_host: '{{ docker_host }}'
         files: docker-compose-grf.yml
       register: output
