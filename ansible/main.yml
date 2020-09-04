@@ -16,6 +16,7 @@
     - name: Ensure Grafana volume is created
       docker_volume:
         name: grf-data
+        docker_host: '{{ docker_host  }}'
     - name: "Stop docker compose"
       docker_compose:
         project_src: ../
