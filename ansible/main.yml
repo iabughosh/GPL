@@ -10,9 +10,10 @@
     - name: Ensure docker-volume packages are presented
       pip:
         name: docker_volume
-    - name: "Print working directory"
-      debug:
-        msg: "Ansible directory with {{ playbook_dir }}"
+    - name: Remove enum34 package if found
+      pip:
+        name: enum34
+        state: absent
     - name: Ensure Grafana volume is created
       docker_volume:
         name: grf-data
