@@ -6,10 +6,9 @@
   tasks:
     - name: Ensure docker-compose packages are there
       pip:
-        name: docker_compose
-    - name: Ensure docker-volume packages are presented
-      pip:
-        name: docker_volume
+        name:
+          - docker_compose
+          - docker_volume
     - name: Remove enum34 package if found
       pip:
         name: enum34
