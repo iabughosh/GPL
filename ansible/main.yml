@@ -4,17 +4,18 @@
   vars:
     docker_host: localhost:2375
   tasks:
-    - name: Check if docker-compose packages are there
+    - name: Ensure docker-compose packages are there
       pip:
         name: docker_compose
+    - name: Ensure docker-volume packages are presented
+      pip:
+        name: docker_volume
     - name: "Print working directory"
       debug:
         msg: "Ansible directory with {{ playbook_dir }}"
-    - name: Recursively find /tmp files older than 4 weeks and equal or greater than 1 megabyte
-      find:
-        paths: "/tmp"
-        pattern: '*'
-        recurse: yes
+    - name: Ensure Grafana volume is created
+      docker_volume:
+        name: grf-data
     - name: "Stop docker compose"
       docker_compose:
         project_src: ../

@@ -3,6 +3,9 @@ version: "3"
 networks:
   loki:
 
+volumes:
+  grf-data:
+    external: true
 services:
   loki:
     image: grafana/loki
@@ -17,7 +20,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - loki
 #  promtail:
@@ -33,7 +36,8 @@ services:
     ports:
       - "3030:3000"
     volumes:
-      - ./grf-data:/var/lib/grafana
+#      - ./grf-data:/var/lib/grafana
+      - grf-data:/var/lib/grafana
     networks:
       - loki
   jaeger:
