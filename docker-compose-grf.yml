@@ -16,11 +16,11 @@ services:
     networks:
       - loki
   prometheus:
-    image: prom/prometheus
+    image: prometheus:latest 
     ports:
       - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+#    volumes:
+#      - prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - loki
 #  promtail:
